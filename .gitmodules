@@ -1,0 +1,3 @@
+[submodule "flask-live-charts"]
+	path = flask-live-charts
+	url = https://github.com/tdiethe/flask-live-charts.git

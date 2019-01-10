@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>Hello, {{ current_user.username }}!</h1>
+    
+    <div><p>{{ subjectName }} mood is: 
+
+    {% if (mood == 5.0) %}
+    <h2 class ="happy"> {{ mood }} </h2>
+    {% elif (mood == 4) %}
+    <h2 class ="meh"> {{ mood }}</h2>
+    {% elif (mood == 3) %}
+    <h2 class = "sad"> {{ mood }} </h2>
+
+       {% endif %}
+        
+        </p></div>
+        <img src = "{{impath}}" />
+{% endblock %}
