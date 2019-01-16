@@ -1,12 +1,14 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, Flask, make_response
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app.models import User, Person
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.email import send_password_reset_email
-import os
-import math
+import os, math, json
+from time import time
+from random import random
+
 
 
 user_id_dict = {
@@ -80,6 +82,9 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
+
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -149,3 +154,78 @@ def reset_password(token):
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+'''
+
+@app.route('/pie')
+def pie(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
+	chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+	series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
+	title = {"text": 'My Title'}
+	xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
+	yAxis = {"title": {"text": 'yAxis Label'}}
+	return render_template('pie.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
+'''
+
+
+@app.route('/pie')
+def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+    series = [{
+        'name': 'Brands',
+        'colorByPoint': 'true',
+        'data': [{
+            'name': 'Chrome',
+            'y': 61.41,
+            'sliced': 'true',
+            'selected': 'true'
+        }, {
+            'name': 'Internet Explorer',
+            'y': 11.84
+        }, {
+            'name': 'Firefox',
+            'y': 10.85
+        }, {
+            'name': 'Edge',
+            'y': 4.67
+        }, {
+            'name': 'Safari',
+            'y': 4.18
+        }, {
+            'name': 'Sogou Explorer',
+            'y': 1.64
+        }, {
+            'name': 'Opera',
+            'y': 1.6
+        }, {
+            'name': 'QQ',
+            'y': 1.2
+        }, {
+            'name': 'Other',
+            'y': 2.61
+        }]
+    }]
+
+    #series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
+    title = {"text": 'My Title'}
+    xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
+    yAxis = {"title": {"text": 'yAxis Label'}}
+    return render_template('pie.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
+
+
+
+#TODO: make this function link to the live graph page
+@app.route('/subject/<subjectName>', methods=['GET', 'POST'])
+@login_required
+def subject(subjectName):
+    pass
+    return render_template('subjectDetails.html', title= 'Spying on <subjectName>', subjectName=subjectName, data='test')
+
+@app.route('/live-data')
+@login_required
+def live_data():
+    # Create a PHP array and echo it as JSON
+    data = [time() * 1000, random() * 100]
+    response = make_response(json.dumps(data))
+    response.content_type = 'application/json'
+    return response
