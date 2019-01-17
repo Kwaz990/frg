@@ -58,3 +58,4 @@ werkzeug.routing.BuildError: Could not build url for endpoint 'subject, subjectN
 2019-01-10 07:44:08,331 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
 2019-01-10 18:00:01,876 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
 2019-01-14 19:04:24,910 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
+2019-01-16 08:01:18,216 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]

@@ -42,7 +42,7 @@ class Person(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     mood = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
+    
     def __repr__(self):
         return '<Person {}>'.format(self.user_id)
 

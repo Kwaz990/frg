@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request, Flask, make_response
+from flask import render_template, flash, redirect, url_for, request, Flask, make_response, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app.models import User, Person
@@ -8,6 +8,12 @@ from app.email import send_password_reset_email
 import os, math, json
 from time import time
 from random import random
+from marshmallow import Schema, fields, pprint, ValidationError
+
+
+
+
+
 
 
 
@@ -155,17 +161,31 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-'''
 
-@app.route('/pie')
-def pie(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
-	chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
-	series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
-	title = {"text": 'My Title'}
-	xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
-	yAxis = {"title": {"text": 'yAxis Label'}}
-	return render_template('pie.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
-'''
+#instantiate Marshmallow
+#ma = Marshmallow(app)
+
+class PersonSchema(Schema):
+    id = fields.Int()
+    timestamp = fields.DateTime()
+    mood = fields.Int()
+    user_id = fields.Int()
+
+
+
+@app.route("/data.json")
+def data():
+   # person = Person.query.filter_by(user_id=2) #filter_by(user_id=2)
+    person = Person.query.all()
+   # person_dict = person.__dict__
+    #del person_dict['']
+    schema = PersonSchema(many=True)
+    result = schema.dump(person)
+    pprint(result.data)
+    return jsonify({'person': result.data})
+    
+    #return json.dumps(person)
+
 
 
 @app.route('/pie')
@@ -207,7 +227,7 @@ def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
     }]
 
     #series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
-    title = {"text": 'My Title'}
+    title = {"text": 'Pie Test, Yo!'}
     xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
     yAxis = {"title": {"text": 'yAxis Label'}}
     return render_template('pie.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
