@@ -23,18 +23,19 @@ def commitFacialData(mood, timestamp, user_id):
     mood = mood
     time = timestamp
     user_id = 2
-    newFacialData = Person(timestamp=time, mood= mood, user_id=2)
+    newFacialData = Person(timestamp=time, mood= mood, user_id=3)
     db.session.add(newFacialData)
     db.session.commit()
     print(True)
     return True
 
-mood = randint(1,7)    
+mood = randint(0, 3)    
 timestamp = timestamp_begin
 
 while timestamp <= timestamp_end:
-    commitFacialData(mood, timestamp, user_id=2)
+    commitFacialData(mood, timestamp, user_id=3)
     timestamp += pitch
+    mood = randint(1,3)
     print("Iterations left :", (timestamp_end-timestamp)/pitch)
 
 

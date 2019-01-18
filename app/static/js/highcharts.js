@@ -6,7 +6,7 @@ var chart;
  */
 function requestData() {
     $.ajax({
-        url: '/data.json',
+        url: '/live-data',
         success: function(point) {
             var series = chart.series[0],
                 shift = series.data.length > 20; // shift if the series is

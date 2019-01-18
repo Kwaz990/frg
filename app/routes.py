@@ -12,19 +12,6 @@ from marshmallow import Schema, fields, pprint, ValidationError
 
 
 
-
-
-
-
-
-user_id_dict = {
-    "1": "Kwasi",
-    '2': "Gene",
-    '3': "Carter",
-    '4': "Kenso"
-}
-
-
 user_id_dict = {
     "1": "Kwasi",
     '2': "Gene",
@@ -162,6 +149,11 @@ def logout():
     return redirect(url_for('index'))
 
 
+
+emotionDict = {1: 'sad', 2:'neutral', 3: 'happy'}
+
+
+
 #instantiate Marshmallow
 #ma = Marshmallow(app)
 
@@ -173,24 +165,77 @@ class PersonSchema(Schema):
 
 
 
-@app.route("/data.json")
-def data():
-   # person = Person.query.filter_by(user_id=2) #filter_by(user_id=2)
-    person = Person.query.all()
+@app.route("/pieData")
+def pieData():
+    person = Person.query.filter_by(user_id=3).filter(Person.mood)
+    #person = Person.query.all()
    # person_dict = person.__dict__
     #del person_dict['']
     schema = PersonSchema(many=True)
     result = schema.dump(person)
     pprint(result.data)
-    return jsonify({'person': result.data})
+    result_data = result.data
+    pieList = []
+    pieDict = {}
+    pieMaster = []
+    userEmo = []
+    for i in result_data:
+        print(i['mood'])
+        pieList.append(i['mood'])
+    print('pieList:', pieList)
+    for i in pieList:
+        if i in emotionDict:
+            userEmo.append(emotionDict[i])
+            #pieDict[i]=emotionDict[i]
+    print('userEmo:', userEmo)
+    pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
+    print('pieMaster:', pieMaster)        
+
+    return jsonify(pieMaster)
     
-    #return json.dumps(person)
 
 
+    '''
+    You want pieData in the folllowing form:
+    data: [{ y: 1, name: "Point2", color: "#00FF00" }, { y: 7, name: "Point1", color: "#FF00FF" }]
 
+    '''
 @app.route('/pie')
 def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+    person = Person.query.filter_by(user_id=3).filter(Person.mood)
+    schema = PersonSchema(many=True)
+    result = schema.dump(person)
+    pprint(result.data)
+    result_data = result.data
+    pieList = []
+    pieDict = {}
+    pieMaster = []
+    userEmo = []
+    pieEmoSum = {'sad': 0, 'neutral': 0, 'happy': 0}
+    for i in result_data:
+        print(i['mood'])
+        pieList.append(i['mood'])
+    print('pieList:', pieList)
+    for i in pieList:
+        if i in emotionDict:
+            userEmo.append(emotionDict[i])
+            pieEmoSum[emotionDict[i]] +=1
+    print('userEmo:', userEmo)
+    print('pieEmoSum:', pieEmoSum)
+    pieMaster = [{'y':v, 'name': k} for k, v in pieEmoSum.items()]
+    #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
+    print('pieMaster:', pieMaster)
+    
+    
+    series = [{
+        'name': 'Brands',
+        'colorByPoint': 'true',
+        'data': pieMaster
+    }]
+
+
+    '''
     series = [{
         'name': 'Brands',
         'colorByPoint': 'true',
@@ -225,6 +270,7 @@ def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
             'y': 2.61
         }]
     }]
+    '''
 
     #series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
     title = {"text": 'Pie Test, Yo!'}
