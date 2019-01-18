@@ -202,7 +202,7 @@ def pieData():
     '''
 @app.route('/pie')
 def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
-    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
     person = Person.query.filter_by(user_id=3).filter(Person.mood)
     schema = PersonSchema(many=True)
     result = schema.dump(person)
@@ -286,6 +286,81 @@ def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
 def subject(subjectName):
     pass
     return render_template('subjectDetails.html', title= 'Spying on <subjectName>', subjectName=subjectName, data='test')
+
+@app.route('/chartdemo')
+@login_required
+def chartdemo(chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
+    person = Person.query.filter_by(user_id=3).filter(Person.mood)
+    schema = PersonSchema(many=True)
+    result = schema.dump(person)
+    #pprint(result.data)
+    result_data = result.data
+    mood = []
+    for i in result_data:
+        mood.append(i['mood'])
+    print('mood:', mood)   
+
+    pointStart = Person.query.filter_by(user_id=3).filter(Person.timestamp)
+    pointStartSchema = PersonSchema(many=True)
+    pointStartResult = pointStartSchema.dump(pointStart)
+    #pprint(pointStartResult.data)
+    pointStartData = pointStartResult.data
+    time = []
+    for i in pointStartData:
+        time.append(i['timestamp'])
+    print('time:', time)
+
+    series = [{
+        'name': 'Brands',
+        'colorByPoint': 'true',
+        'data': mood
+    }]
+
+
+    plotOptions = {
+    'series': {
+      'pointStart': time
+    }
+  }
+
+
+    title = {"text": 'ChartDemo, Yo!'}
+    xAxis = {"title": {'text': 'Time'}}
+    yAxis = {"title": {"text": 'Emotion Integer'}}
+
+    return render_template('chartdemo.html', title= 'chartdemo', chartID=chartID, chart=chart, series=series, xAxis=xAxis, yAxis=yAxis, plotOptions = plotOptions)
+
+
+@app.route('/liveEmo')
+@login_required
+def liveEmo():
+    person = Person.query.filter_by(user_id=3).filter(Person.mood)
+    schema = PersonSchema(many=True)
+    result = schema.dump(person)
+    pprint(result.data)
+    result_data = result.data
+    pieList = []
+    pieDict = {}
+    pieMaster = []
+    userEmo = []
+    pieEmoSum = {'sad': 0, 'neutral': 0, 'happy': 0}
+    for i in result_data:
+        print(i['mood'])
+        pieList.append(i['mood'])
+    print('pieList:', pieList)
+    for i in pieList:
+        if i in emotionDict:
+            userEmo.append(emotionDict[i])
+            pieEmoSum[emotionDict[i]] +=1
+    print('userEmo:', userEmo)
+    print('pieEmoSum:', pieEmoSum)
+    pieMaster = [{'y':v, 'name': k} for k, v in pieEmoSum.items()]
+    #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
+    print('pieMaster:', pieMaster)
+    return jsonify(pieMaster)
+
+
 
 @app.route('/live-data')
 @login_required
