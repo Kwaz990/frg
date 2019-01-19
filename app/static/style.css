@@ -1,18 +1,39 @@
-.angry {
-    color: red;
-}
-.sad {
-    color: darkblue
-}
-.meh {
-    color: tan;
-}
-.happy {
-    color: green;
-}
-.great {
-    color: -webkit-linear-gradient(left, orange , yellow, green, cyan, blue, violet); /* For Safari 5.1 to 6.0 */
-    color: -o-linear-gradient(right, orange, yellow, green, cyan, blue, violet); /* For Opera 11.1 to 12.0 */
-    color: -moz-linear-gradient(right, orange, yellow, green, cyan, blue, violet); /* For Firefox 3.6 to 15 */
-    color: linear-gradient(to right, orange , yellow, green, cyan, blue, violet); /* Standard syntax (must be last) */
-}
+
+.container1 {
+    padding-left: 50;
+    padding-right: 0;
+    list-style: none;
+    
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    
+    align-items: center;
+    align-content: center;
+  
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  
+  .chart {
+    background: white;
+    padding: 5px;
+    padding-left:auto;
+    padding-right: 0;
+    flex: 1 1 auto; 
+    margin-top: 1px;
+    margin-left: 50;
+    margin-right: 0;
+  
+  
+    
+    line-height: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    text-align: center;
+    align-self: auto
+  }

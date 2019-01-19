@@ -23,7 +23,7 @@ def commitFacialData(mood, timestamp, user_id):
     mood = mood
     time = timestamp
     user_id = 2
-    newFacialData = Person(timestamp=time, mood= mood, user_id=3)
+    newFacialData = Person(timestamp=time, mood= mood, user_id=4)
     db.session.add(newFacialData)
     db.session.commit()
     print(True)

@@ -8,138 +8,33 @@
     <p>Below are your subjects:</p>
 </div>
 
-<a href="{{ url_for('subject', user_id=1) }}">Kwasi</a>
-<div>
-    <p>has a mood of : </p>
-</div>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
-
 
 
 {% for chartData in chartParams %}
+{{ chartData }}
+<h2> {{ chartData['user_id_name'] }}</h2>
+<div class="container1">
+<div id={{ chartData['chart']['renderTo']|safe }} class="chart"></div>
+{% endfor %}
+{% endblock %}
 
-
-<div id={{ chartData['chartID']|safe }} class="chart"></div>
-
-
+{% block scripts %}
+{{ super() }}
+<script src="http://code.highcharts.com/highcharts.js"></script>
+{% for chartData in chartParams %}
 <script>
-    $(document).ready(function () {
-        $({{ chartData['chartID']| safe }}).highcharts({
+        $(document).ready(function () {
+            $("#{{ chartData['chart']['renderTo']| safe }}").highcharts({
             chart: {{ chartData['chart']| safe }},
-        title: {{ chartData['title']| safe }},
-        xAxis: {{ chartData['xAxis']| safe }},
-        yAxis: {{ chartData['yAxis']| safe }},
-        series: {{ chartData['series']| safe }}
-});
-});
-
+            title: {{ chartData['title']| safe }},
+            xAxis: {{ chartData['xAxis']| safe }},
+            yAxis: {{ chartData['yAxis']| safe }},
+            series: {{ chartData['series']| safe }}
+    });
+    });
 </script>
 
-{% endfor %}
-
-
-
-<a href="{{ url_for('subject', user_id=2) }}">Gene</a>
-<div>
-    <p>has a mood of : </p>
-
-
-    {% for chartData in chartParams2 %}
-
-
-<div id={{ chartData['chartID2']|safe }} class="chart"></div>
-
-
-<script>
-    $(document).ready(function () {
-        $({{ chartData['chartID2']| safe }}).highcharts({
-            chart: {{ chartData['chart']| safe }},
-        title: {{ chartData['title']| safe }},
-        xAxis: {{ chartData['xAxis']| safe }},
-        yAxis: {{ chartData['yAxis']| safe }},
-        series: {{ chartData['series']| safe }}
-});
-});
-
-</script>
-
-{% endfor %}
-
-
-
-
 </div>
-<a href="{{ url_for('subject', user_id=3) }}">Carter</a>
-<div>
-    <p>has a mood of : </p>
-
-
-    {% for chartData in chartParams3 %}
-
-
-<div id={{ chartData['chartID3']|safe }} class="chart"></div>
-
-
-<script>
-    $(document).ready(function () {
-        $({{ chartData['chartID3']| safe }}).highcharts({
-            chart: {{ chartData['chart']| safe }},
-        title: {{ chartData['title']| safe }},
-        xAxis: {{ chartData['xAxis']| safe }},
-        yAxis: {{ chartData['yAxis']| safe }},
-        series: {{ chartData['series']| safe }}
-});
-});
-
-</script>
-
+    
 {% endfor %}
-
-
-
-
-</div>
-<a href="{{ url_for('subject', user_id=4) }}">Kenso</a>
-<div>
-    <p>has a mood of : </p>
-</div>
-
-
-{% for chartData in chartParams4 %}
-
-
-<div id={{ chartData['chartID4']|safe }} class="chart"></div>
-
-
-<script>
-    $(document).ready(function () {
-        $({{ chartData['chartID']| safe }}).highcharts({
-            chart: {{ chartData['chart']| safe }},
-        title: {{ chartData['title']| safe }},
-        xAxis: {{ chartData['xAxis']| safe }},
-        yAxis: {{ chartData['yAxis']| safe }},
-        series: {{ chartData['series']| safe }}
-});
-});
-
-</script>
-
-{% endfor %}
-
-
-
-{% if (mood == 5.0) %}
-<h2 class="happy"> {{ mood }} </h2>
-{% elif (mood == 4) %}
-<h2 class="meh"> {{ mood }}</h2>
-{% elif (mood == 3) %}
-<h2 class="sad"> {{ mood }} </h2>
-
-{% endif %}
-
-</p>
-</div>
-
 {% endblock %}
