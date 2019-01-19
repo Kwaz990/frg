@@ -288,11 +288,11 @@ def subject(subjectName):
     pass
     return render_template('subjectDetails.html', title= 'Spying on <subjectName>', subjectName=subjectName, data='test')
 
-@app.route('/chartdemo')
+@app.route('/chartdemo/<user_id>')
 @login_required
-def chartdemo(chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
+def chartdemo(user_id, chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
-    person = Person.query.filter_by(user_id=3).filter(Person.mood)
+    person = Person.query.filter_by(user_id=user_id).filter(Person.mood)
     schema = PersonSchema(many=True)
     result = schema.dump(person)
     #pprint(result.data)
@@ -331,23 +331,25 @@ def chartdemo(chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
     #print('time[0]:',time[0])
 
     series = [{
-        'data': [1, 2, 1, 3, 1, 1, 3, 1, 1, 2] #mood
+        'data': mood
+    },
+        {
+    'pointStart': dateTime_formatted 
     }]
 
-
+    #plotOptions does not seem to work in python implementation
     plotOptions = {
     'series': {
-      'pointStart': dateTime_formatted  #datetime.strptime(dateTime_formatted[0], '%Y-%m-%d %H:%M:%S')
+      'pointStart': dateTime_formatted[0]  #datetime.strptime(dateTime_formatted[0], '%Y-%m-%d %H:%M:%S')
     }
   }
 
 
     title = {"text": 'ChartDemo, Yo!'}
-    xAxis = {"title": {'text': 'Time'},
-    'categories': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']}
+    xAxis = {"title": {'text': 'Time'}}
     yAxis = {"title": {"text": 'Emotion Integer'}}
 
-    return render_template('chartdemo.html', title= title, chartID=chartID, chart=chart, series=series, xAxis=xAxis, yAxis=yAxis)# plotOptions = plotOptions)
+    return render_template('chartdemo.html', title= title, chartID=chartID, chart=chart, series=series, xAxis=xAxis, yAxis=yAxis, user_id=user_id)# plotOptions = plotOptions)
 
 
 @app.route('/liveEmo')
