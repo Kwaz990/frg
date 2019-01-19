@@ -5,6 +5,6 @@ $(document).ready(function() {
 		xAxis: xAxis,
 		yAxis: yAxis,
 		series: series,
-		plotOptions: plotOptions
+
 	});
 });

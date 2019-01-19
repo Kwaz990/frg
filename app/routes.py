@@ -7,6 +7,7 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswor
 from app.email import send_password_reset_email
 import os, math, json
 from time import time
+from datetime import datetime
 from random import random
 from marshmallow import Schema, fields, pprint, ValidationError
 
@@ -155,7 +156,7 @@ emotionDict = {1: 'sad', 2:'neutral', 3: 'happy'}
 
 
 #instantiate Marshmallow
-#ma = Marshmallow(app)
+#marshmallow is used to serialize sqlalchemy db data into json
 
 class PersonSchema(Schema):
     id = fields.Int()
@@ -306,30 +307,47 @@ def chartdemo(chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
     pointStartResult = pointStartSchema.dump(pointStart)
     #pprint(pointStartResult.data)
     pointStartData = pointStartResult.data
+    #the datetime data has a T in the formatting. The following code correctly
+    #formatts the datetime data to be used as highcharts data
     time = []
+    dateAndTime = []
+    dateTime_almost = []
+    dateTime_formatted = []
     for i in pointStartData:
+       # dateAndTime.append(i['timestamp'])
         time.append(i['timestamp'])
-    print('time:', time)
+    for i in time:
+        dateAndTime.append(i.split('T'))
+    for i in dateAndTime:
+        dateTime_almost.append(' '.join(i))
+    for i in dateTime_almost:
+        dateTime_formatted.append(i[:19])
+ #   print('intermediate', dateAndTime)
+  #  print('******************************')
+   # print('almost', dateTime_almost)
+    #print('###########################')
+    #print('formatted', dateTime_formatted)
+    #print('time:', time)
+    #print('time[0]:',time[0])
 
     series = [{
-        'name': 'Brands',
-        'colorByPoint': 'true',
-        'data': mood
+        'data': [1, 2, 1, 3, 1, 1, 3, 1, 1, 2] #mood
     }]
 
 
     plotOptions = {
     'series': {
-      'pointStart': time
+      'pointStart': dateTime_formatted  #datetime.strptime(dateTime_formatted[0], '%Y-%m-%d %H:%M:%S')
     }
   }
 
 
     title = {"text": 'ChartDemo, Yo!'}
-    xAxis = {"title": {'text': 'Time'}}
+    xAxis = {"title": {'text': 'Time'},
+    'categories': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']}
     yAxis = {"title": {"text": 'Emotion Integer'}}
 
-    return render_template('chartdemo.html', title= 'chartdemo', chartID=chartID, chart=chart, series=series, xAxis=xAxis, yAxis=yAxis, plotOptions = plotOptions)
+    return render_template('chartdemo.html', title= title, chartID=chartID, chart=chart, series=series, xAxis=xAxis, yAxis=yAxis)# plotOptions = plotOptions)
 
 
 @app.route('/liveEmo')
