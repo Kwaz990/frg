@@ -24,7 +24,7 @@ user_id_dict = {
 @app.route('/')
 @app.route('/index')
 @login_required
-def index():
+def index(chartID = 'chart_ID', chartID2 = 'chart_ID2', chartID3 = 'chart_ID3', chartID4 = 'chart_ID4', chart_type = 'pie', chart_height = '100%'):
     #user = {'username': 'Miguel'}
     sat_lev = { 
         'one': "angry"
@@ -52,7 +52,193 @@ def index():
         moodAverage = math.ceil(moodAverage)
     impath = "/static/snapShots/{}/{}.jpg".format(subjectName, subjectName)
 
-    return render_template('index.html', title='Home', sat_lev = sat_lev, mood= moodAverage, subjectImg = subjectImg, subjectName = subjectName, impath=impath)
+    #The following code queries the db and sets piechart parameters
+    #Much of the following code will be repeated for each of the four users
+    #being displayed on the index
+
+
+    emotionDict = {1: 'sad', 2:'neutral', 3: 'happy'}
+
+
+    ###################################################
+    #code for user 1
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
+    person = Person.query.filter_by(user_id=1).filter(Person.mood)
+    schema = PersonSchema(many=True)
+    result = schema.dump(person)
+    #pprint(result.data)
+    result_data = result.data
+    pieList = []
+    pieDict = {}
+    pieMaster = []
+    userEmo = []
+    pieEmoSum = {'sad': 0, 'neutral': 0, 'happy': 0}
+    for i in result_data:
+        #print(i['mood'])
+        pieList.append(i['mood'])
+    #print('pieList:', pieList)
+    for i in pieList:
+        if i in emotionDict:
+            userEmo.append(emotionDict[i])
+            pieEmoSum[emotionDict[i]] +=1
+    #print('userEmo:', userEmo)
+    #print('pieEmoSum:', pieEmoSum)
+    pieMaster = [{'y':v, 'name': k} for k, v in pieEmoSum.items()]
+    #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
+    #print('pieMaster:', pieMaster)
+    
+    
+    series = [{
+        'name': 'Brands',
+        'colorByPoint': 'true',
+        'data': pieMaster
+    }]
+
+    title = {"text": 'Pie Test, Yo!'}
+    xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
+    yAxis = {"title": {"text": 'yAxis Label'}}
+
+
+    params = {'chartID': chartID, 'chart':chart, 'series':series, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis}
+    chartParams =[params]
+
+
+    ###################################################
+    #code for user 2
+    chart2 = {"renderTo": chartID2, "type": chart_type, "height": chart_height}
+    person2 = Person.query.filter_by(user_id=2).filter(Person.mood)
+    schema = PersonSchema(many=True)
+    result2 = schema.dump(person2)
+    #pprint(result.data)
+    result_data2 = result2.data
+    pieList2 = []
+    pieDict2 = {}
+    pieMaster2 = []
+    userEmo2 = []
+    pieEmoSum2 = {'sad': 0, 'neutral': 0, 'happy': 0}
+    for i in result_data2:
+        #print(i['mood'])
+        pieList2.append(i['mood'])
+    #print('pieList:', pieList)
+    for i in pieList2:
+        if i in emotionDict:
+            userEmo2.append(emotionDict[i])
+            pieEmoSum2[emotionDict[i]] +=1
+    #print('userEmo:', userEmo)
+    #print('pieEmoSum:', pieEmoSum)
+    pieMaster2 = [{'y':v, 'name': k} for k, v in pieEmoSum2.items()]
+    #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
+    #print('pieMaster:', pieMaster)
+    
+    
+    series2 = [{
+        'name': 'Brands',
+        'colorByPoint': 'true',
+        'data': pieMaster2
+    }]
+
+    title = {"text": 'Pie Test, Yo!'}
+    xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
+    yAxis = {"title": {"text": 'yAxis Label'}}
+
+
+    params2 = {'chartID2': chartID2, 'chart':chart2, 'series':series2, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis}
+    chartParams2 =[params2]
+
+
+    ####################################################
+    #code for user 3
+
+    chart3 = {"renderTo": chartID3, "type": chart_type, "height": chart_height}
+    person3 = Person.query.filter_by(user_id=3).filter(Person.mood)
+    schema = PersonSchema(many=True)
+    result3 = schema.dump(person3)
+    #pprint(result.data)
+    result_data3 = result3.data
+    pieList3 = []
+    pieDict3 = {}
+    pieMaster3 = []
+    userEmo3 = []
+    pieEmoSum3 = {'sad': 0, 'neutral': 0, 'happy': 0}
+    for i in result_data3:
+        #print(i['mood'])
+        pieList3.append(i['mood'])
+    #print('pieList:', pieList)
+    for i in pieList3:
+        if i in emotionDict:
+            userEmo3.append(emotionDict[i])
+            pieEmoSum3[emotionDict[i]] +=1
+    #print('userEmo:', userEmo)
+    #print('pieEmoSum:', pieEmoSum)
+    pieMaster3 = [{'y':v, 'name': k} for k, v in pieEmoSum3.items()]
+    #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
+    #print('pieMaster:', pieMaster)
+    
+    
+    series3 = [{
+        'name': 'Brands',
+        'colorByPoint': 'true',
+        'data': pieMaster3
+    }]
+
+    title = {"text": 'Pie Test, Yo!'}
+    xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
+    yAxis = {"title": {"text": 'yAxis Label'}}
+
+
+    params3 = {'chartID3': chartID3, 'chart':chart3, 'series':series3, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis}
+    chartParams3 =[params3]
+
+
+
+    ############################################
+    #code for user 4
+
+    chart4 = {"renderTo": chartID4, "type": chart_type, "height": chart_height}
+    person4 = Person.query.filter_by(user_id=4).filter(Person.mood)
+    schema = PersonSchema(many=True)
+    result4 = schema.dump(person4)
+    #pprint(result.data)
+    result_data4 = result4.data
+    pieList4 = []
+    pieDict4 = {}
+    pieMaster4 = []
+    userEmo4 = []
+    pieEmoSum4 = {'sad': 0, 'neutral': 0, 'happy': 0}
+    for i in result_data4:
+        #print(i['mood'])
+        pieList4.append(i['mood'])
+    #print('pieList:', pieList)
+    for i in pieList4:
+        if i in emotionDict:
+            userEmo4.append(emotionDict[i])
+            pieEmoSum4[emotionDict[i]] +=1
+    #print('userEmo:', userEmo)
+    #print('pieEmoSum:', pieEmoSum)
+    pieMaster4 = [{'y':v, 'name': k} for k, v in pieEmoSum4.items()]
+    #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
+    #print('pieMaster:', pieMaster)
+    
+    
+    series4 = [{
+        'name': 'Brands',
+        'colorByPoint': 'true',
+        'data': pieMaster4
+    }]
+
+    title = {"text": 'Pie Test, Yo!'}
+    xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
+    yAxis = {"title": {"text": 'yAxis Label'}}
+
+
+    params4 = {'chartID4': chartID4, 'chart':chart4, 'series':series4, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis}
+    chartParams4 =[params4]
+
+
+
+
+
+    return render_template('index.html', title='Home', sat_lev = sat_lev, mood= moodAverage, subjectImg = subjectImg, subjectName = subjectName, impath=impath, chartParams=chartParams, chartParams2=chartParams2, chartParams3=chartParams3, chartParams4=chartParams4)
 
 
 
@@ -277,20 +463,19 @@ def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
     title = {"text": 'Pie Test, Yo!'}
     xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
     yAxis = {"title": {"text": 'yAxis Label'}}
-    return render_template('pie.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
+    params = {'chartID': chartID, 'chart':chart, 'series':series, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis}
+    chartParams =[params]
+    
+
+
+    return render_template('pie.html', chartParams=chartParams)
+   # return render_template('pie.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
 
 
 
-#TODO: make this function link to the live graph page
-@app.route('/subject/<subjectName>', methods=['GET', 'POST'])
+@app.route('/subject/<user_id>')
 @login_required
-def subject(subjectName):
-    pass
-    return render_template('subjectDetails.html', title= 'Spying on <subjectName>', subjectName=subjectName, data='test')
-
-@app.route('/chartdemo/<user_id>')
-@login_required
-def chartdemo(user_id, chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
+def subject(user_id, chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
     person = Person.query.filter_by(user_id=user_id).filter(Person.mood)
     schema = PersonSchema(many=True)
@@ -349,7 +534,7 @@ def chartdemo(user_id, chartID = 'chart_ID', chart_type = 'line', chart_height =
     xAxis = {"title": {'text': 'Time'}}
     yAxis = {"title": {"text": 'Emotion Integer'}}
 
-    return render_template('chartdemo.html', title= title, chartID=chartID, chart=chart, series=series, xAxis=xAxis, yAxis=yAxis, user_id=user_id)# plotOptions = plotOptions)
+    return render_template('subjectDetails.html', title= title, chartID=chartID, chart=chart, series=series, xAxis=xAxis, yAxis=yAxis, user_id=user_id)# plotOptions = plotOptions)
 
 
 @app.route('/liveEmo')

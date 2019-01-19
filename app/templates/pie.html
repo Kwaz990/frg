@@ -1,48 +1,67 @@
 <html>
 
-<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <head>
 </head>
 
 
 
-	<body>
-		<h3>{{ title }}</h3>
-		{% for p in paragraph %}
-		<p>{{ p }}</p>
-		{% endfor %}
-		
-		{% if pageType == 'about' %}
-		<p>Contact box thing is here</p>
-		{% else %}
-		<p>not about page</p>
-		{% endif %}
-		
-		
+<body>
+	<h3>{{ title }}</h3>
+	{% for p in paragraph %}
+	<p>{{ p }}</p>
+	{% endfor %}
 
-		
+	{% if pageType == 'about' %}
+	<p>Contact box thing is here</p>
+	{% else %}
+	<p>not about page</p>
+	{% endif %}
 
-		
-		<div id={{ chartID|safe }} class="chart"></div>
-		<script>
-			var chart_id = {{ chartID|safe }}
-			var series = {{ series|safe }}
-			var title = {{ title|safe }}
-			var xAxis = {{ xAxis|safe }}
-			var yAxis = {{ yAxis|safe }}
-			var chart = {{ chart|safe }}
-		</script>
-			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-			<script src="http://code.highcharts.com/highcharts.js"></script>
-			<script src="../static/js/pie.js"></script>
 
-	</body>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+
+
+
+	{% for chartData in chartParams %}
+
+
+	<div id={{ chartData['chartID']|safe }} class="chart"></div>
 	
+
+	<script>
+		$(document).ready(function () {
+			$({{ chartData['chartID']| safe }}).highcharts({
+				chart: {{ chartData['chart']| safe }},
+			title: {{ chartData['title']| safe }},
+			xAxis: {{ chartData['xAxis']| safe }},
+			yAxis: {{ chartData['yAxis']| safe }},
+			series: {{ chartData['series']| safe }}
+	});
+});
+/*
+		var chart_id = {{ chartID| safe }}
+		var series = {{ series| safe }}
+		var title = {{ title| safe }}
+		var xAxis = {{ xAxis| safe }}
+		var yAxis = {{ yAxis| safe }}
+		var chart = {{ chart| safe }}
+		*/
+	</script>
+
+{% endfor %}
 	
+
+
+
 </body>
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 
-</html>		
+</html>
