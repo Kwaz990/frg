@@ -13,9 +13,9 @@
     align-items: center;
     align-content: center;
   
-    -webkit-flex-flow: row wrap;
-    flex-flow: row wrap;
-    justify-content: center;
+    -webkit-flex-flow: column wrap;
+    flex-flow: column wrap;
+    justify-content: space-around;
   }
   
   .chart {

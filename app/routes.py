@@ -24,7 +24,7 @@ user_id_dict = {
 @app.route('/')
 @app.route('/viewlist/path:idnums')
 @login_required
-def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
+def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_height = '75%'):
     sat_lev = { 
         'one': "angry"
         }
@@ -56,15 +56,17 @@ def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_heig
     #being displayed on the index
 
 
-    emotionDict = {1: 'sad', 2:'neutral', 3: 'happy'}
+    emotionDict = {1: 'Sad', 2:'Neutral', 3: 'Happy'}
 
 
     ###################################################
     #code for user 1
     user_id_name = ''
     chartParams = []
+    user_id_int = 0
     for i in idnums:
         user_id_name = user_id_dict[str(i)]
+        user_id_int = i
         chart = {"renderTo": chartID + str(i), "type": chart_type, "height": chart_height}
         person = Person.query.filter_by(user_id=i).filter(Person.mood)
         schema = PersonSchema(many=True)
@@ -75,7 +77,7 @@ def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_heig
         pieDict = {}
         pieMaster = []
         userEmo = []
-        pieEmoSum = {'sad': 0, 'neutral': 0, 'happy': 0}
+        pieEmoSum = {'Sad': 0, 'Neutral': 0, 'Happy': 0}
         for i in result_data:
         #print(i['mood'])
             pieList.append(i['mood'])
@@ -102,7 +104,7 @@ def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_heig
         yAxis = {"title": {"text": 'yAxis Label'}}
 
 
-        params = {'chartID': chartID, 'chart':chart, 'series':series, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis, 'user_id_name': user_id_name}
+        params = {'chartID': chartID, 'chart':chart, 'series':series, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis, 'user_id_name': user_id_name, 'user_id_int':user_id_int}
         chartParams.append(params)
     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     print('chartParams:', chartParams)
@@ -346,7 +348,8 @@ def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
 
 @app.route('/subject/<user_id>')
 @login_required
-def subject(user_id, chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
+def subject(user_id=None, chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
+    
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
     person = Person.query.filter_by(user_id=user_id).filter(Person.mood)
     schema = PersonSchema(many=True)
@@ -358,7 +361,7 @@ def subject(user_id, chartID = 'chart_ID', chart_type = 'line', chart_height = '
         mood.append(i['mood'])
     print('mood:', mood)   
 
-    pointStart = Person.query.filter_by(user_id=3).filter(Person.timestamp)
+    pointStart = Person.query.filter_by(user_id=user_id).filter(Person.timestamp)
     pointStartSchema = PersonSchema(many=True)
     pointStartResult = pointStartSchema.dump(pointStart)
     #pprint(pointStartResult.data)
@@ -382,7 +385,7 @@ def subject(user_id, chartID = 'chart_ID', chart_type = 'line', chart_height = '
   #  print('******************************')
    # print('almost', dateTime_almost)
     #print('###########################')
-    #print('formatted', dateTime_formatted)
+    print('formatted', dateTime_formatted)
     #print('time:', time)
     #print('time[0]:',time[0])
 
