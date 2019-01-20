@@ -1,4 +1,4 @@
-2019-01-09 20:43:39,278 ERROR: Exception on / [GET] [in /mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py:1761]
+2019-01-09 20:52:44,587 ERROR: Exception on / [GET] [in /mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -43,7 +43,7 @@ Traceback (most recent call last):
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/base.html", line 52, in block "content"
     {% block app_content %}{% endblock %}
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/index.html", line 9, in block "app_content"
-    <a href="{{ url_for('Kwasi') }}">Kwasi</a>
+    <a href="{{ url_for('subject') }}">Kwasi</a>
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/helpers.py", line 356, in url_for
     return appctx.app.handle_url_build_error(error, endpoint, values)
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 2061, in handle_url_build_error
@@ -54,8 +54,9 @@ Traceback (most recent call last):
     force_external=external)
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'Kwasi'. Did you mean 'static' instead?
-2019-01-09 20:43:44,436 ERROR: Exception on / [GET] [in /mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py:1761]
+werkzeug.routing.BuildError: Could not build url for endpoint 'subject/Kwasi'. Did you mean 'static' instead?
+2019-01-09 20:52:55,280 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
+2019-01-09 20:53:00,179 ERROR: Exception on / [GET] [in /mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
@@ -100,7 +101,7 @@ Traceback (most recent call last):
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/base.html", line 52, in block "content"
     {% block app_content %}{% endblock %}
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/index.html", line 9, in block "app_content"
-    <a href="{{ url_for('Kwasi') }}">Kwasi</a>
+    <a href="{{ url_for('subject') }}">Kwasi</a>
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/helpers.py", line 356, in url_for
     return appctx.app.handle_url_build_error(error, endpoint, values)
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 2061, in handle_url_build_error
@@ -111,5 +112,4 @@ Traceback (most recent call last):
     force_external=external)
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'Kwasi'. Did you mean 'static' instead?
-2019-01-09 20:45:26,248 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
+werkzeug.routing.BuildError: Could not build url for endpoint 'subject'. Did you mean 'user' instead?

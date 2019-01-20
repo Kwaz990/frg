@@ -1,59 +1,115 @@
-2019-01-09 20:53:31,001 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
-2019-01-09 20:53:34,672 ERROR: Exception on / [GET] [in /mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py:1761]
+2019-01-10 07:39:02,118 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
+2019-01-10 07:39:31,944 ERROR: Exception on / [GET] [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py:1761]
 Traceback (most recent call last):
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
     response = self.full_dispatch_request()
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
     raise value
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
     rv = self.dispatch_request()
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask_login/utils.py", line 261, in decorated_view
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_login/utils.py", line 261, in decorated_view
     return func(*args, **kwargs)
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/routes.py", line 59, in index
     return render_template('index.html', title='Home', sat_lev = sat_lev, mood= moodAverage, subjectImg = subjectImg, subjectName = subjectName, impath=impath)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/templating.py", line 135, in render_template
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/templating.py", line 135, in render_template
     context, ctx.app)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/templating.py", line 117, in _render
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/templating.py", line 117, in _render
     rv = template.render(context)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
     return original_render(self, *args, **kwargs)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
     return self.environment.handle_exception(exc_info, True)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
     reraise(exc_type, exc_value, tb)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
     raise value.with_traceback(tb)
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/index.html", line 2, in top-level template code
     {% import 'bootstrap/wtf.html' as wtf %}
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/base.html", line 1, in top-level template code
     {% extends 'bootstrap/base.html' %}
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
     {% block doc -%}
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
     {%- block html %}
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
     {% block body -%}
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
     {% block content -%}
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/base.html", line 52, in block "content"
     {% block app_content %}{% endblock %}
   File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/index.html", line 9, in block "app_content"
-    <a href="{{ url_for('subject/Kwasi') }}">Kwasi</a>
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/helpers.py", line 356, in url_for
+    <a href="{{ url_for('subject, subjectName=Kwasi') }}">Kwasi</a>
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/helpers.py", line 356, in url_for
     return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/app.py", line 2061, in handle_url_build_error
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 2061, in handle_url_build_error
     reraise(exc_type, exc_value, tb)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
     raise value
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/flask/helpers.py", line 345, in url_for
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/helpers.py", line 345, in url_for
     force_external=external)
-  File "/mnt/c/Users/Kwaz9/Desktop/Byte/flask-live-charts/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'subject/Kwasi'. Did you mean 'subject' instead?
-2019-01-09 20:54:00,356 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
+werkzeug.routing.BuildError: Could not build url for endpoint 'subject, subjectName=Kwasi'. Did you mean 'subject' instead?
+2019-01-10 07:42:23,260 ERROR: Exception on / [GET] [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/routes.py", line 59, in index
+    return render_template('index.html', title='Home', sat_lev = sat_lev, mood= moodAverage, subjectImg = subjectImg, subjectName = subjectName, impath=impath)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/templating.py", line 135, in render_template
+    context, ctx.app)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/templating.py", line 117, in _render
+    rv = template.render(context)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/jinja2/asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/index.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
+    {%- block html %}
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
+    {% block body -%}
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
+    {% block content -%}
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/base.html", line 52, in block "content"
+    {% block app_content %}{% endblock %}
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/templates/index.html", line 9, in block "app_content"
+    <a href="{{ url_for('subject, subjectName=Kwasi') }}">Kwasi</a>
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/helpers.py", line 356, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/app.py", line 2061, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/flask/helpers.py", line 345, in url_for
+    force_external=external)
+  File "/mnt/c/Users/Kwaz9/Desktop/Byte/frg/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 1776, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'subject, subjectName=Kwasi'. Did you mean 'subject' instead?

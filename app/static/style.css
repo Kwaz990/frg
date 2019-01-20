@@ -37,3 +37,7 @@
     text-align: center;
     align-self: auto
   }
+  .yLabels {
+    font-weight: bold;
+    font-size: 1em;
+  }

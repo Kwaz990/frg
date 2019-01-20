@@ -1,49 +1,38 @@
-<html>
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
-<meta name="viewport" content = "width=device-width, initial-scale=1.0">
-<head>
-</head>
-
+{% block app_content %}
 
 
-	<body>
-		<h3>{{ title }}</h3>
-		{% for p in paragraph %}
-		<p>{{ p }}</p>
-		{% endfor %}
-		
-		{% if pageType == 'about' %}
-		<p>Contact box thing is here</p>
-		{% else %}
-		<p>not about page</p>
-		{% endif %}
-		
-		
 
-		
+{% for chartData in chartParams %}
 
-		
-		<div id={{ chartID|safe }} class="chart"></div>
-		<script>
-			var chart_id = {{ chartID|safe }}
-			var series = {{ series|safe }}
-			var title = {{ title|safe }}
-			var xAxis = {{ xAxis|safe }}
-			var yAxis = {{ yAxis|safe }}
-			var chart = {{ chart|safe }}
+<h2> {{ chartData['user_id_name'] }}</h2>
+<a href="{{ url_for('subject', user_id=chartData['user_id_int'] ) }}">Details</a>
+<div class="container1">
+<div id={{ chartData['chart']['renderTo']|safe }} class="chart"></div>
+{% endfor %}
+{% endblock %}
 
-		</script>
-			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-			<script src="http://code.highcharts.com/highcharts.js"></script>
-			<script src="../static/js/graph.js"></script>
+{% block scripts %}
+{{ super() }}
+<script src="http://code.highcharts.com/highcharts.js"></script>
+{% for chartData in chartParams %}
+<script>
+        $(document).ready(function () {
+            $("#{{ chartData['chart']['renderTo']| safe }}").highcharts({
+            chart: {{ chartData['chart']| safe }},
+            title: {{ chartData['title']| safe }},
+            xAxis: {{ chartData['xAxis']| safe }},
+            yAxis: {{ chartData['yAxis']| safe }},
+            series: {{ chartData['series']| safe }}
+    });
+    });
+</script>
 
-	</body>
-	
-	
-</body>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</div>
+    
+{% endfor %}
+{% endblock %}
 
 
-</html>		

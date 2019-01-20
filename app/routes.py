@@ -5,12 +5,13 @@ from app.models import User, Person
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.email import send_password_reset_email
-import os, math, json
+import os
+import math
+import json
 from time import time
 from datetime import datetime
 from random import random
 from marshmallow import Schema, fields, pprint, ValidationError
-
 
 
 user_id_dict = {
@@ -24,12 +25,12 @@ user_id_dict = {
 @app.route('/')
 @app.route('/viewlist/path:idnums')
 @login_required
-def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_height = '75%'):
-    sat_lev = { 
+def index(idnums=(1, 2, 3, 4), chartID='chart_ID', chart_type='pie', chart_height='75%'):
+    sat_lev = {
         'one': "angry"
-        }
+    }
 
-    moodQuery=Person.query.filter_by(user_id=1).all()
+    moodQuery = Person.query.filter_by(user_id=1).all()
     moodSum = 0
     moodAverage = 0
     subjectId = moodQuery
@@ -38,10 +39,11 @@ def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_heig
     #if len(moodQuery) > 0:
     #    subjectName = user_id_dict[moodQuery[0]]
 
-        #To check if folder exists, create if doesnt exists
+    #To check if folder exists, create if doesnt exists
     exist_path = os.path.join('snapShots', subjectName)
     if os.path.exists(exist_path):
-        subjectImg = os.path.join('snapShots', subjectName, '{}.jpg'.format(subjectName))
+        subjectImg = os.path.join(
+            'snapShots', subjectName, '{}.jpg'.format(subjectName))
     else:
         os.makedirs(os.path.join('snapShots', subjectName))
 
@@ -55,9 +57,7 @@ def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_heig
     #Much of the following code will be repeated for each of the four users
     #being displayed on the index
 
-
-    emotionDict = {1: 'Sad', 2:'Neutral', 3: 'Happy'}
-
+    emotionDict = {1: 'Sad', 2: 'Neutral', 3: 'Happy'}
 
     ###################################################
     #code for user 1
@@ -67,7 +67,8 @@ def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_heig
     for i in idnums:
         user_id_name = user_id_dict[str(i)]
         user_id_int = i
-        chart = {"renderTo": chartID + str(i), "type": chart_type, "height": chart_height}
+        chart = {"renderTo": chartID +
+                 str(i), "type": chart_type, "height": chart_height}
         person = Person.query.filter_by(user_id=i).filter(Person.mood)
         schema = PersonSchema(many=True)
         result = schema.dump(person)
@@ -79,20 +80,19 @@ def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_heig
         userEmo = []
         pieEmoSum = {'Sad': 0, 'Neutral': 0, 'Happy': 0}
         for i in result_data:
-        #print(i['mood'])
+            #print(i['mood'])
             pieList.append(i['mood'])
         #print('pieList:', pieList)
         for i in pieList:
             if i in emotionDict:
                 userEmo.append(emotionDict[i])
-                pieEmoSum[emotionDict[i]] +=1
+                pieEmoSum[emotionDict[i]] += 1
     #print('userEmo:', userEmo)
     #print('pieEmoSum:', pieEmoSum)
-        pieMaster = [{'y':v, 'name': k} for k, v in pieEmoSum.items()]
+        pieMaster = [{'y': v, 'name': k} for k, v in pieEmoSum.items()]
     #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
     #print('pieMaster:', pieMaster)
-    
-    
+
         series = [{
             'name': 'Emotion',
             'colorByPoint': 'true',
@@ -103,19 +103,13 @@ def index(idnums=(1,2,3,4), chartID = 'chart_ID', chart_type = 'pie', chart_heig
         xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
         yAxis = {"title": {"text": 'yAxis Label'}}
 
-
-        params = {'chartID': chartID, 'chart':chart, 'series':series, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis, 'user_id_name': user_id_name, 'user_id_int':user_id_int}
+        params = {'chartID': chartID, 'chart': chart, 'series': series, 'title': title,
+                  'xAxis': xAxis, 'yAxis': yAxis, 'user_id_name': user_id_name, 'user_id_int': user_id_int}
         chartParams.append(params)
     print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     print('chartParams:', chartParams)
 
-
-
-    return render_template('index.html', title='Home', sat_lev = sat_lev, mood= moodAverage, subjectImg = subjectImg, subjectName = subjectName, impath=impath, chartParams=chartParams)
-
-
-
-
+    return render_template('index.html', title='Home', sat_lev=sat_lev, mood=moodAverage, subjectImg=subjectImg, subjectName=subjectName, impath=impath, chartParams=chartParams)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -136,8 +130,6 @@ def login():
     return render_template('login.html', title='Sign In', form=form)
 
 
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -151,6 +143,7 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -166,6 +159,7 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
+
 
 @app.route('/user/<username>')
 @login_required
@@ -186,7 +180,8 @@ def reset_password_request():
         flash('Check your email for the instructions to reset your password')
         return redirect(url_for('login'))
     return render_template('reset_password_request.html',
-                            title='Reset Password', form=form)
+                           title='Reset Password', form=form)
+
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
@@ -203,15 +198,14 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
 
-
-emotionDict = {1: 'sad', 2:'neutral', 3: 'happy'}
-
+emotionDict = {1: 'sad', 2: 'neutral', 3: 'happy'}
 
 
 #instantiate Marshmallow
@@ -222,7 +216,6 @@ class PersonSchema(Schema):
     timestamp = fields.DateTime()
     mood = fields.Int()
     user_id = fields.Int()
-
 
 
 @app.route("/pieData")
@@ -248,20 +241,20 @@ def pieData():
             userEmo.append(emotionDict[i])
             #pieDict[i]=emotionDict[i]
     print('userEmo:', userEmo)
-    pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
-    print('pieMaster:', pieMaster)        
+    pieMaster = [{'y': k, 'name': v} for k, v in zip(pieList, userEmo)]
+    print('pieMaster:', pieMaster)
 
     return jsonify(pieMaster)
-    
-
 
     '''
     You want pieData in the folllowing form:
     data: [{ y: 1, name: "Point2", color: "#00FF00" }, { y: 7, name: "Point1", color: "#FF00FF" }]
 
     '''
+
+
 @app.route('/pie')
-def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
+def pie(chartID='chart_ID', chart_type='pie', chart_height='100%'):
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
     person = Person.query.filter_by(user_id=3).filter(Person.mood)
     schema = PersonSchema(many=True)
@@ -280,20 +273,18 @@ def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
     for i in pieList:
         if i in emotionDict:
             userEmo.append(emotionDict[i])
-            pieEmoSum[emotionDict[i]] +=1
+            pieEmoSum[emotionDict[i]] += 1
     print('userEmo:', userEmo)
     print('pieEmoSum:', pieEmoSum)
-    pieMaster = [{'y':v, 'name': k} for k, v in pieEmoSum.items()]
+    pieMaster = [{'y': v, 'name': k} for k, v in pieEmoSum.items()]
     #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
     print('pieMaster:', pieMaster)
-    
-    
+
     series = [{
         'name': 'Brands',
         'colorByPoint': 'true',
         'data': pieMaster
     }]
-
 
     '''
     series = [{
@@ -336,20 +327,18 @@ def pie(chartID = 'chart_ID', chart_type = 'pie', chart_height = '100%'):
     title = {"text": 'Pie Test, Yo!'}
     xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
     yAxis = {"title": {"text": 'yAxis Label'}}
-    params = {'chartID': chartID, 'chart':chart, 'series':series, 'title':title, 'xAxis':xAxis, 'yAxis':yAxis}
-    chartParams =[params]
-    
-
+    params = {'chartID': chartID, 'chart': chart, 'series': series,
+              'title': title, 'xAxis': xAxis, 'yAxis': yAxis}
+    chartParams = [params]
 
     return render_template('pie.html', chartParams=chartParams)
    # return render_template('pie.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
 
 
-
 @app.route('/subject/<user_id>')
 @login_required
-def subject(user_id=None, chartID = 'chart_ID', chart_type = 'line', chart_height = '100%'):
-    
+def subject(user_id=None, chartID='chart_ID', chart_type='line', chart_height='100%'):
+
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
     person = Person.query.filter_by(user_id=user_id).filter(Person.mood)
     schema = PersonSchema(many=True)
@@ -359,9 +348,10 @@ def subject(user_id=None, chartID = 'chart_ID', chart_type = 'line', chart_heigh
     mood = []
     for i in result_data:
         mood.append(i['mood'])
-    print('mood:', mood)   
+    print('mood:', mood)
 
-    pointStart = Person.query.filter_by(user_id=user_id).filter(Person.timestamp)
+    pointStart = Person.query.filter_by(
+        user_id=user_id).filter(Person.timestamp)
     pointStartSchema = PersonSchema(many=True)
     pointStartResult = pointStartSchema.dump(pointStart)
     #pprint(pointStartResult.data)
@@ -380,35 +370,53 @@ def subject(user_id=None, chartID = 'chart_ID', chart_type = 'line', chart_heigh
     for i in dateAndTime:
         dateTime_almost.append(' '.join(i))
     for i in dateTime_almost:
-        dateTime_formatted.append(i[:19])
- #   print('intermediate', dateAndTime)
-  #  print('******************************')
-   # print('almost', dateTime_almost)
-    #print('###########################')
+        dateTime_formatted.append(i[:10])
+
     print('formatted', dateTime_formatted)
-    #print('time:', time)
-    #print('time[0]:',time[0])
+   
+
+    #Here you format the mood and datetiem of each db entry into a list of lists with two membered elements
+    #output: [[x,y], [a,b]]
+   # timeAndMood = [[] for x in range(len(dateTime_formatted ))]
+   # for i in range(len(dateTime_formatted)):
+   #     timeAndMood[i].append(mood[i])
+   #     timeAndMood[i].append(dateTime_formatted[i])
+    
+    #print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+
+   # for x, y in mood, dateTime_formatted:
+    #    timeAndMood.append([x, y])
+    #print('timeAndMood:', timeAndMood)
+
+    #testList = []
+
+   # for i in dateTime_formatted:   
+   #    x = datetime.strptime(i, '%Y-%M-%d').date()
+   #    testList.append(x)
+   # print('TESTTESTTEST:',testList)
+   # print('type:', testList[1])
+
+
 
     series = [{
-        'data': mood
-    },
-        {
-    'pointStart': dateTime_formatted 
+        'data': mood #timeAndMood,
+
     }]
 
-    #plotOptions does not seem to work in python implementation
-    plotOptions = {
-    'series': {
-      'pointStart': dateTime_formatted[0]  #datetime.strptime(dateTime_formatted[0], '%Y-%m-%d %H:%M:%S')
-    }
-  }
-
-
-    title = {"text": 'ChartDemo, Yo!'}
+    title = {"text": 'Overview'}
     xAxis = {"title": {'text': 'Time'}}
-    yAxis = {"title": {"text": 'Emotion Integer'}}
+           # 'categories': [dateTime_formatted] }
+    yAxis = {"title": {"text": 'Emotion Integer'},
+            "categories": ['','Sad', 'Neurtral', 'Happy'],
+            'className': 'yLabels'
+            }
 
-    return render_template('subjectDetails.html', title= title, chartID=chartID, chart=chart, series=series, xAxis=xAxis, yAxis=yAxis, user_id=user_id)# plotOptions = plotOptions)
+    params = {'chartID': chartID, 'chart': chart, 'series': series,
+              'title': title, 'xAxis': xAxis, 'yAxis': yAxis}
+    chartParams = [params]
+
+    # plotOptions = plotOptions)
+    return render_template('subjectDetails.html', title=title, chartParams=chartParams)
 
 
 @app.route('/liveEmo')
@@ -431,14 +439,13 @@ def liveEmo():
     for i in pieList:
         if i in emotionDict:
             userEmo.append(emotionDict[i])
-            pieEmoSum[emotionDict[i]] +=1
+            pieEmoSum[emotionDict[i]] += 1
     print('userEmo:', userEmo)
     print('pieEmoSum:', pieEmoSum)
-    pieMaster = [{'y':v, 'name': k} for k, v in pieEmoSum.items()]
+    pieMaster = [{'y': v, 'name': k} for k, v in pieEmoSum.items()]
     #pieMaster = [{'y':k, 'name': v} for k, v in zip(pieList, userEmo)]
     print('pieMaster:', pieMaster)
     return jsonify(pieMaster)
-
 
 
 @app.route('/live-data')
