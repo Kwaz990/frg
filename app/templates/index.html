@@ -11,10 +11,10 @@
 
 
 {% for chartData in chartParams %}
-
+<div class="container1">
 <h2> {{ chartData['user_id_name'] }}</h2>
 <a href="{{ url_for('subject', user_id=chartData['user_id_int'] ) }}">Details</a>
-<div class="container1">
+
 <div id={{ chartData['chart']['renderTo']|safe }} class="chart"></div>
 {% endfor %}
 {% endblock %}

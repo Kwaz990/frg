@@ -26,9 +26,7 @@ user_id_dict = {
 @app.route('/viewlist/path:idnums')
 @login_required
 def index(idnums=(1, 2, 3, 4), chartID='chart_ID', chart_type='pie', chart_height='75%'):
-    sat_lev = {
-        'one': "angry"
-    }
+
 
     moodQuery = Person.query.filter_by(user_id=1).all()
     moodSum = 0
@@ -99,17 +97,17 @@ def index(idnums=(1, 2, 3, 4), chartID='chart_ID', chart_type='pie', chart_heigh
             'data': pieMaster
         }]
 
-        title = {"text": 'Pie Test, Yo!'}
+        title = {"text": 'Emotional Overview'}
         xAxis = {"categories": ['xAxis Data1', 'xAxis Data2', 'xAxis Data3']}
         yAxis = {"title": {"text": 'yAxis Label'}}
 
         params = {'chartID': chartID, 'chart': chart, 'series': series, 'title': title,
                   'xAxis': xAxis, 'yAxis': yAxis, 'user_id_name': user_id_name, 'user_id_int': user_id_int}
         chartParams.append(params)
-    print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    #print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     print('chartParams:', chartParams)
 
-    return render_template('index.html', title='Home', sat_lev=sat_lev, mood=moodAverage, subjectImg=subjectImg, subjectName=subjectName, impath=impath, chartParams=chartParams)
+    return render_template('index.html', title='Home', mood=moodAverage, subjectImg=subjectImg, subjectName=subjectName, impath=impath, chartParams=chartParams)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -217,7 +215,7 @@ class PersonSchema(Schema):
     mood = fields.Int()
     user_id = fields.Int()
 
-
+'''
 @app.route("/pieData")
 def pieData():
     person = Person.query.filter_by(user_id=3).filter(Person.mood)
@@ -246,13 +244,12 @@ def pieData():
 
     return jsonify(pieMaster)
 
-    '''
     You want pieData in the folllowing form:
     data: [{ y: 1, name: "Point2", color: "#00FF00" }, { y: 7, name: "Point1", color: "#FF00FF" }]
 
-    '''
+'''
 
-
+'''
 @app.route('/pie')
 def pie(chartID='chart_ID', chart_type='pie', chart_height='100%'):
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
@@ -286,7 +283,7 @@ def pie(chartID='chart_ID', chart_type='pie', chart_height='100%'):
         'data': pieMaster
     }]
 
-    '''
+
     series = [{
         'name': 'Brands',
         'colorByPoint': 'true',
@@ -321,7 +318,7 @@ def pie(chartID='chart_ID', chart_type='pie', chart_height='100%'):
             'y': 2.61
         }]
     }]
-    '''
+
 
     #series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
     title = {"text": 'Pie Test, Yo!'}
@@ -333,7 +330,7 @@ def pie(chartID='chart_ID', chart_type='pie', chart_height='100%'):
 
     return render_template('pie.html', chartParams=chartParams)
    # return render_template('pie.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
-
+'''
 
 @app.route('/subject/<user_id>')
 @login_required
@@ -403,8 +400,8 @@ def subject(user_id=None, chartID='chart_ID', chart_type='line', chart_height='1
 
     }]
 
-    title = {"text": 'Overview'}
-    xAxis = {"title": {'text': 'Time'}}
+    title = {"text": 'Emotion Over Time'}
+    xAxis = {"title": {'text': 'Time Point'}}
            # 'categories': [dateTime_formatted] }
     yAxis = {"title": {"text": 'Emotion Integer'},
             "categories": ['','Sad', 'Neurtral', 'Happy'],
@@ -418,7 +415,7 @@ def subject(user_id=None, chartID='chart_ID', chart_type='line', chart_height='1
     # plotOptions = plotOptions)
     return render_template('subjectDetails.html', title=title, chartParams=chartParams)
 
-
+'''
 @app.route('/liveEmo')
 @login_required
 def liveEmo():
@@ -456,3 +453,5 @@ def live_data():
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
     return response
+
+'''    
