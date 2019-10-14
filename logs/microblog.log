@@ -37,3 +37,5 @@ ValueError: too many values to unpack (expected 2)
 2019-01-20 11:00:07,816 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
 2019-01-21 19:25:14,773 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
 2019-01-22 19:39:28,150 INFO: Microblog startup [in /mnt/c/Users/Kwaz9/Desktop/Byte/frg/app/__init__.py:49]
+2019-10-14 18:05:19,457 INFO: Microblog startup [in C:\Users\Kwaz9\Desktop\MachineLearning\frg\app\__init__.py:49]
+2019-10-14 18:05:26,595 INFO: Microblog startup [in C:\Users\Kwaz9\Desktop\MachineLearning\frg\app\__init__.py:49]
